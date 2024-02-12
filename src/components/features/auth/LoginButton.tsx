@@ -1,10 +1,10 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { Loader } from "@/components/ui/loader";
 import { useMutation } from "@tanstack/react-query";
 import { LogIn } from "lucide-react";
 import { signIn } from "next-auth/react";
-import { Button } from "../../ui/button";
 
 export const LoginButton = () => {
   const mutation = useMutation({
@@ -16,6 +16,7 @@ export const LoginButton = () => {
       onClick={() => {
         mutation.mutate();
       }}
+      disabled={mutation.isPending}
     >
       {mutation.isPending ? (
         <Loader
