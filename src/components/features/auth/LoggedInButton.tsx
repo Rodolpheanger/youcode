@@ -8,8 +8,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
+import { User2 } from "lucide-react";
 import { Session } from "next-auth";
-import { LogoutButton } from "./LogoutButton";
+import Link from "next/link";
+import { LogoutButtonWithAlert } from "./LogoutButtonWithAlert";
 
 export type LoggedInButtonProps = {
   user: Session["user"];
@@ -22,6 +24,7 @@ export const LoggedInButton = (props: LoggedInButtonProps) => {
         <Button
           variant="ghost"
           size="sm"
+          className="text-base"
         >
           <Avatar className="mr-2 size-6">
             <AvatarFallback>{props.user?.name?.[0]}</AvatarFallback>
@@ -36,10 +39,23 @@ export const LoggedInButton = (props: LoggedInButtonProps) => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuItem>Profil</DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Button variant="ghost">
+            <Link
+              href="/account"
+              className="flex items-center"
+            >
+              <User2
+                className="mr-2 block"
+                size={12}
+              />
+              <p>Mon compte</p>
+            </Link>
+          </Button>
+        </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
-          <LogoutButton />
+          <LogoutButtonWithAlert />
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
