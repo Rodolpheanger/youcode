@@ -4,7 +4,7 @@ import {
   NextApiResponse,
 } from "next";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../../app/api/auth/[...nextauth]/route";
+import { authOptions } from "./../../app/api/auth/[...nextauth]/route";
 
 type ParametersGetServerSession =
   | []
@@ -16,4 +16,20 @@ export const getAuthSession = async (
 ) => {
   const session = await getServerSession(...parameters, authOptions);
   return session;
+};
+
+export const getRequiredAuthSession = async (
+  ...parameters: ParametersGetServerSession
+) => {
+  const session = await getServerSession(...parameters, authOptions);
+  if (!session) {
+    throw new Error("Vous n'êtes pas authentifié");
+  }
+  return session as {
+    user: {
+      id: string;
+      email?: string;
+      image?: string;
+    };
+  };
 };

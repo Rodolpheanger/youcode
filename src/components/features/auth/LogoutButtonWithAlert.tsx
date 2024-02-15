@@ -18,7 +18,7 @@ import { signOut } from "next-auth/react";
 export const LogoutButtonWithAlert = () => {
   const mutation = useMutation({
     mutationFn: async () => {
-      signOut();
+      signOut({ callbackUrl: "/" });
     },
   });
   return (
